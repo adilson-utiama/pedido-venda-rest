@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.asuprojects.pvconceitual.domain.Categoria;
 import com.asuprojects.pvconceitual.repositories.CategoriaRepository;
+import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -17,7 +18,8 @@ public class CategoriaService {
 	
 	public Categoria buscaPorId(int id) {
 		Optional<Categoria> optional = categorias.findById(id);
-		return optional.orElse(null);
+		return optional.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID: " + id + 
+				" , Tipo: " + Categoria.class.getName()));
 	}
 
 	public List<Categoria> findAll() {
