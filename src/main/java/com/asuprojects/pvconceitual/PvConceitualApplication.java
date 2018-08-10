@@ -14,6 +14,7 @@ import com.asuprojects.pvconceitual.domain.Cidade;
 import com.asuprojects.pvconceitual.domain.Cliente;
 import com.asuprojects.pvconceitual.domain.Endereco;
 import com.asuprojects.pvconceitual.domain.Estado;
+import com.asuprojects.pvconceitual.domain.ItemPedido;
 import com.asuprojects.pvconceitual.domain.Pagamento;
 import com.asuprojects.pvconceitual.domain.PagamentoComBoleto;
 import com.asuprojects.pvconceitual.domain.PagamentoComCartao;
@@ -26,6 +27,7 @@ import com.asuprojects.pvconceitual.repositories.CidadeRespository;
 import com.asuprojects.pvconceitual.repositories.ClienteRepository;
 import com.asuprojects.pvconceitual.repositories.EnderecoRepository;
 import com.asuprojects.pvconceitual.repositories.EstadoRepository;
+import com.asuprojects.pvconceitual.repositories.ItemPedidoRepository;
 import com.asuprojects.pvconceitual.repositories.PagamentoRepository;
 import com.asuprojects.pvconceitual.repositories.PedidoRepository;
 import com.asuprojects.pvconceitual.repositories.ProdutoRepository;
@@ -49,6 +51,8 @@ public class PvConceitualApplication implements CommandLineRunner{
 	private PedidoRepository pedidos;
 	@Autowired
 	private PagamentoRepository pagamentos;
+	@Autowired
+	private ItemPedidoRepository itemPedidos;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PvConceitualApplication.class, args);
@@ -100,7 +104,7 @@ public class PvConceitualApplication implements CommandLineRunner{
 		clientes.saveAll(Arrays.asList(cli1));
 		enderecos.saveAll(Arrays.asList(e1, e2));
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
@@ -115,5 +119,21 @@ public class PvConceitualApplication implements CommandLineRunner{
 		
 		pedidos.saveAll(Arrays.asList(ped1, ped2));
 		pagamentos.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, BigDecimal.ZERO, 1, BigDecimal.valueOf(2000.00));
+		ItemPedido ip2 = new ItemPedido(ped1, p3, BigDecimal.ZERO, 2, BigDecimal.valueOf(80.00));
+		ItemPedido ip3 = new ItemPedido(ped2, p2, BigDecimal.valueOf(100.00), 1, BigDecimal.valueOf(800.00));
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidos.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
+		
 	}
 }
