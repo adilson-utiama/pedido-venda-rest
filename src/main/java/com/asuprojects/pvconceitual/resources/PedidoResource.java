@@ -18,8 +18,8 @@ public class PedidoResource {
 	private PedidoService pedidos;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscaPorId(@PathVariable("id") int id){
-		Pedido pedido = pedidos.buscaPorId(id);
+	public ResponseEntity<?> findById(@PathVariable("id") int id){
+		Pedido pedido = pedidos.findById(id);
 		return ResponseEntity.ok(pedido);
 	}
 }

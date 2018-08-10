@@ -30,8 +30,8 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> buscaPorId(@PathVariable("id") int id){
-		Categoria categoria = service.buscaPorId(id);
+	public ResponseEntity<?> findById(@PathVariable("id") int id){
+		Categoria categoria = service.findById(id);
 		return ResponseEntity.ok(categoria);
 	}
 
