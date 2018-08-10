@@ -26,7 +26,7 @@ public class CategoriaService {
 		categoria.setId(null);
 		return categorias.save(categoria);
 	}
-
+	
 	public List<Categoria> findAll() {
 		return categorias.findAll();
 		

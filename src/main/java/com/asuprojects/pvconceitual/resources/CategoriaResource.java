@@ -38,7 +38,7 @@ public class CategoriaResource {
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
 		Categoria categoriaSalva = service.insert(categoria);
-		
+	
 		//Constroi uri baseado no recurso criado
 		URI uriToResource = ServletUriComponentsBuilder
 			.fromCurrentRequest()
