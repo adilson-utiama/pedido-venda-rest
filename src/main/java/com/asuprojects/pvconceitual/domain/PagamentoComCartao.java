@@ -1,7 +1,10 @@
 package com.asuprojects.pvconceitual.domain;
 
+import javax.persistence.Entity;
+
 import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento {
 
 	private static final long serialVersionUID = 1L;
