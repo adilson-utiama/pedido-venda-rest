@@ -2,7 +2,6 @@ package com.asuprojects.pvconceitual.domain;
 
 import java.util.Date;
 
-import com.asuprojects.pvconceitual.Pagamento;
 import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 
 public class PagamentoComBoleto extends Pagamento{

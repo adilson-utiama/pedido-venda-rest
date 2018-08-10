@@ -1,6 +1,5 @@
 package com.asuprojects.pvconceitual.domain;
 
-import com.asuprojects.pvconceitual.Pagamento;
 import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 
 public class PagamentoComCartao extends Pagamento {

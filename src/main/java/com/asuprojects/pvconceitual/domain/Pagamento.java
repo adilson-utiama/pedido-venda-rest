@@ -1,4 +1,4 @@
-package com.asuprojects.pvconceitual;
+package com.asuprojects.pvconceitual.domain;
 
 import java.io.Serializable;
 
@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.asuprojects.pvconceitual.domain.Pedido;
 import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 
 @Entity

@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import com.asuprojects.pvconceitual.Pagamento;
-
 @Entity
 public class Pedido implements Serializable{
 
