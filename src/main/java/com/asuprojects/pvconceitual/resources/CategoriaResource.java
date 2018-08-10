@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,4 +50,13 @@ public class CategoriaResource {
 		return ResponseEntity.created(uriToResource).build(); //devolve no header da resposta
 	}
 
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable("id") int id){
+		categoria.setId(id);
+		service.update(categoria);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
 }

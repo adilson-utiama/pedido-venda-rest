@@ -27,6 +27,11 @@ public class CategoriaService {
 		return categorias.save(categoria);
 	}
 	
+	public Categoria update(Categoria categoria) {
+		findById(categoria.getId());
+		return categorias.save(categoria);
+	} 
+	
 	public List<Categoria> findAll() {
 		return categorias.findAll();
 		
