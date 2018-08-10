@@ -21,6 +21,11 @@ public class CategoriaService {
 		return optional.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID: " + id + 
 				" , Tipo: " + Categoria.class.getName()));
 	}
+	
+	public Categoria insert(Categoria categoria) {
+		categoria.setId(null);
+		return categorias.save(categoria);
+	}
 
 	public List<Categoria> findAll() {
 		return categorias.findAll();
