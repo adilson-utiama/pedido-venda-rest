@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,7 +47,8 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO catDTO){
+		Categoria categoria = service.fromDTO(catDTO);
 		Categoria categoriaSalva = service.insert(categoria);
 	
 		//Constroi uri baseado no recurso criado
@@ -61,7 +62,8 @@ public class CategoriaResource {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable("id") int id){
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO catDTO, @PathVariable("id") int id){
+		Categoria categoria = service.fromDTO(catDTO);
 		categoria.setId(id);
 		service.update(categoria);
 		return ResponseEntity.noContent().build();

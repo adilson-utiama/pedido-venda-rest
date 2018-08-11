@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.asuprojects.pvconceitual.domain.Categoria;
+import com.asuprojects.pvconceitual.dto.CategoriaDTO;
 import com.asuprojects.pvconceitual.repositories.CategoriaRepository;
 import com.asuprojects.pvconceitual.services.exceptions.DataIntegrityException;
 import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
@@ -54,6 +55,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String direction, String orderBy){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return categorias.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO catDTO) {
+		return new Categoria(catDTO.getId(), catDTO.getNome());
 	}
 
 }
