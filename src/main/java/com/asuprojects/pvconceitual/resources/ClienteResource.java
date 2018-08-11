@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.asuprojects.pvconceitual.domain.Categoria;
 import com.asuprojects.pvconceitual.domain.Cliente;
 import com.asuprojects.pvconceitual.dto.ClienteDTO;
 import com.asuprojects.pvconceitual.dto.ClienteNewDTO;
