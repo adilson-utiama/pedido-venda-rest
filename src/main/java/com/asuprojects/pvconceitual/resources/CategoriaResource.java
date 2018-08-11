@@ -30,6 +30,12 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> findById(@PathVariable("id") int id){
+		Categoria categoria = service.findById(id);
+		return ResponseEntity.ok(categoria);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
@@ -38,12 +44,6 @@ public class CategoriaResource {
 				.map(cat -> new CategoriaDTO(cat))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(listaDTO);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable("id") int id){
-		Categoria categoria = service.findById(id);
-		return ResponseEntity.ok(categoria);
 	}
 
 	@PostMapping
