@@ -1,6 +1,7 @@
 package com.asuprojects.pvconceitual.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,6 +54,14 @@ public class Pedido implements Serializable{
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoEntrega = enderecoEntrega;
+	}
+	
+	public double getValorTotal() {
+		BigDecimal soma = BigDecimal.ZERO;
+		for(ItemPedido item : itens) {
+			soma = soma.add(BigDecimal.valueOf(item.getSubTotal()));
+		}
+		return soma.doubleValue();
 	}
 
 	public Integer getId() {
