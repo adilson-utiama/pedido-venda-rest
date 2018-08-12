@@ -73,6 +73,14 @@ public class PvConceitualApplication implements CommandLineRunner{
 		Produto p1 = new Produto(null, "Computador", new BigDecimal(2000.0));
 		Produto p2 = new Produto(null, "Impressora", new BigDecimal(800.0));
 		Produto p3 = new Produto(null, "Mouse", new BigDecimal(80.0));
+		Produto p4 = new Produto(null, "Mesa de escritório", BigDecimal.valueOf(300.00));
+		Produto p5 = new Produto(null, "Toalha", BigDecimal.valueOf(50.00));
+		Produto p6 = new Produto(null, "Colcha", BigDecimal.valueOf(200.00));
+		Produto p7 = new Produto(null, "TV true color", BigDecimal.valueOf(1200.00));
+		Produto p8 = new Produto(null, "Roçadeira", BigDecimal.valueOf(800.00));
+		Produto p9 = new Produto(null, "Abajour", BigDecimal.valueOf(100.00));
+		Produto p10 = new Produto(null, "Pendente", BigDecimal.valueOf(180.00));
+		Produto p11 = new Produto(null, "Shampoo", BigDecimal.valueOf(90.00));
 		
 		c1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		c2.getProdutos().addAll(Arrays.asList(p2));
@@ -80,9 +88,28 @@ public class PvConceitualApplication implements CommandLineRunner{
 		p1.getCategorias().add(c1);
 		p2.getCategorias().addAll(Arrays.asList(c1, c2));
 		p3.getCategorias().add(c1);
+		
+		c2.getProdutos().addAll(Arrays.asList(p2, p4));
+		c3.getProdutos().addAll(Arrays.asList(p5, p6));
+		c4.getProdutos().addAll(Arrays.asList(p1, p2, p3, p7));
+		c5.getProdutos().addAll(Arrays.asList(p8));
+		c6.getProdutos().addAll(Arrays.asList(p9, p10));
+		c7.getProdutos().addAll(Arrays.asList(p11));
+		
+		p1.getCategorias().addAll(Arrays.asList(c1, c4));
+		p2.getCategorias().addAll(Arrays.asList(c1, c2, c4));
+		p3.getCategorias().addAll(Arrays.asList(c1, c4));
+		p4.getCategorias().addAll(Arrays.asList(c2));
+		p5.getCategorias().addAll(Arrays.asList(c3));
+		p6.getCategorias().addAll(Arrays.asList(c3));
+		p7.getCategorias().addAll(Arrays.asList(c4));
+		p8.getCategorias().addAll(Arrays.asList(c5));
+		p9.getCategorias().addAll(Arrays.asList(c6));
+		p10.getCategorias().addAll(Arrays.asList(c6));
+		p11.getCategorias().addAll(Arrays.asList(c7));
 				
 		categorias.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7));
-		produtos.saveAll(Arrays.asList(p1, p2, p3));
+		produtos.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
