@@ -36,12 +36,20 @@ public class ItemPedido implements Serializable{
 		return this.id.getPedido();
 	}
 	
-	public double getSubTotal() {
-		return preco.subtract(desconto).multiply(BigDecimal.valueOf((long) quantidade)).doubleValue();
+	public void setPedido(Pedido pedido) {
+		this.id.setPedido(pedido);
 	}
 	
 	public Produto getProduto() {
 		return this.id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		this.id.setProduto(produto);
+	}
+
+	public double getSubTotal() {
+		return preco.subtract(desconto).multiply(BigDecimal.valueOf((long) quantidade)).doubleValue();
 	}
 
 	public ItemPedidoPK getId() {
