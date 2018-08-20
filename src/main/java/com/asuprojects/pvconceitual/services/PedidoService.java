@@ -17,6 +17,7 @@ import com.asuprojects.pvconceitual.repositories.PagamentoRepository;
 import com.asuprojects.pvconceitual.repositories.PedidoRepository;
 import com.asuprojects.pvconceitual.repositories.ProdutoRepository;
 import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
+import com.asuprojects.pvconceitual.services.mail.EmailService;
 
 @Service
 public class PedidoService {
@@ -38,6 +39,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 
 	public Pedido findById(int id) {
@@ -66,7 +70,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
