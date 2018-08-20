@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.asuprojects.pvconceitual.services.DBService;
+import com.asuprojects.pvconceitual.services.mail.EmailService;
+import com.asuprojects.pvconceitual.services.mail.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -23,11 +25,16 @@ public class DevConfig {
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
 		
-		if(!strategy.equals("create")) {
-			return false;
-		}
+//		if(!strategy.equals("create")) {
+//			return false;
+//		}
 		
 		dbService.instantiateTestDatabase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 }
