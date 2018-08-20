@@ -15,6 +15,7 @@ import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 import com.asuprojects.pvconceitual.repositories.ItemPedidoRepository;
 import com.asuprojects.pvconceitual.repositories.PagamentoRepository;
 import com.asuprojects.pvconceitual.repositories.PedidoRepository;
+import com.asuprojects.pvconceitual.repositories.ProdutoRepository;
 import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,6 +36,9 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 
 	public Pedido findById(int id) {
 		Optional<Pedido> optional = repo.findById(id);
@@ -46,6 +50,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.findById(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -56,10 +61,12 @@ public class PedidoService {
 		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(BigDecimal.ZERO);
-			ip.setPreco(produtoService.findById(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.findById(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }

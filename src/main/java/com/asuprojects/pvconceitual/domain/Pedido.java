@@ -2,8 +2,11 @@ package com.asuprojects.pvconceitual.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -135,6 +138,27 @@ public class Pedido implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ")
+		.append(getId())
+		.append(", Instante: ")
+		.append(df.format(getInstante()))
+		.append(", Cliente: ")
+		.append(getCliente().getNome())
+		.append(", Situação do Pagamento: ")
+		.append(getPagamento().getEstado().getDescricao())
+		.append("\nDetalhes:\n");
+		for(ItemPedido ip : getItens()) {
+			builder.append(ip.toString());
+		}
+		builder.append("Valor Total: ").append(nf.format(getValorTotal()));
+		return builder.toString();
 	}
 
 	
