@@ -21,6 +21,7 @@ import com.asuprojects.pvconceitual.domain.PagamentoComCartao;
 import com.asuprojects.pvconceitual.domain.Pedido;
 import com.asuprojects.pvconceitual.domain.Produto;
 import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
+import com.asuprojects.pvconceitual.domain.enums.Perfil;
 import com.asuprojects.pvconceitual.domain.enums.TipoCliente;
 import com.asuprojects.pvconceitual.repositories.CategoriaRepository;
 import com.asuprojects.pvconceitual.repositories.CidadeRespository;
@@ -122,16 +123,21 @@ public class DBService {
 		cidades.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "wilson.developer.tester@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
-		
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente(null, "Administrador", "asu2u@yahoo.com", "73323185200", TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cid2);
+		Endereco e3 = new Endereco(null, "Rua dos Manolos", "123", "Fundos", "Centro", "38220384", cli2, cid1);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 		
-		clientes.saveAll(Arrays.asList(cli1));
-		enderecos.saveAll(Arrays.asList(e1, e2));
+		clientes.saveAll(Arrays.asList(cli1, cli2));
+		enderecos.saveAll(Arrays.asList(e1, e2, e3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
