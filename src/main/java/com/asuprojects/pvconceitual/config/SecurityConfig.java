@@ -18,6 +18,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.asuprojects.pvconceitual.security.jwt.JWTAuthenticationFilter;
+import com.asuprojects.pvconceitual.security.jwt.JwtUtil;
+
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -54,6 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll() //Permite apenas metodos GET
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
+		
+		//Adicionando Filtro para autenticacao
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
