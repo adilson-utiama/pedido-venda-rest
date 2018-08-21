@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.asuprojects.pvconceitual.domain.Cliente;
 import com.asuprojects.pvconceitual.domain.ItemPedido;
 import com.asuprojects.pvconceitual.domain.PagamentoComBoleto;
 import com.asuprojects.pvconceitual.domain.Pedido;
@@ -15,7 +19,8 @@ import com.asuprojects.pvconceitual.domain.enums.EstadoPagamento;
 import com.asuprojects.pvconceitual.repositories.ItemPedidoRepository;
 import com.asuprojects.pvconceitual.repositories.PagamentoRepository;
 import com.asuprojects.pvconceitual.repositories.PedidoRepository;
-import com.asuprojects.pvconceitual.repositories.ProdutoRepository;
+import com.asuprojects.pvconceitual.security.UserSS;
+import com.asuprojects.pvconceitual.services.exceptions.AuthorizationException;
 import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
 import com.asuprojects.pvconceitual.services.mail.EmailService;
 
@@ -72,5 +77,15 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso Negado!");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.findById(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
 	}
 }
