@@ -3,6 +3,7 @@ package com.asuprojects.pvconceitual.services;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -15,11 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asuprojects.pvconceitual.domain.Cidade;
 import com.asuprojects.pvconceitual.domain.Cliente;
 import com.asuprojects.pvconceitual.domain.Endereco;
+import com.asuprojects.pvconceitual.domain.enums.Perfil;
 import com.asuprojects.pvconceitual.domain.enums.TipoCliente;
 import com.asuprojects.pvconceitual.dto.ClienteDTO;
 import com.asuprojects.pvconceitual.dto.ClienteNewDTO;
 import com.asuprojects.pvconceitual.repositories.ClienteRepository;
 import com.asuprojects.pvconceitual.repositories.EnderecoRepository;
+import com.asuprojects.pvconceitual.security.UserSS;
+import com.asuprojects.pvconceitual.services.exceptions.AuthorizationException;
 import com.asuprojects.pvconceitual.services.exceptions.DataIntegrityException;
 import com.asuprojects.pvconceitual.services.exceptions.ObjectNotFoundException;
 
@@ -35,7 +39,13 @@ public class ClienteService {
 	@Autowired
 	private EnderecoRepository endRepo;
 	
-	public Cliente findById(int id) {
+	public Cliente findById(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado!");
+		}
+		
 		Optional<Cliente> optional = repo.findById(id);
 		return optional.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, ID: " + id + 
 				" , Tipo: " + Cliente.class.getName()));
